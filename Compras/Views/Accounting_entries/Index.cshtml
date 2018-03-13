@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Compras.Models.Accounting_entries>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AuxiliarId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AsientoContableFecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AsientoContableDescripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AsientoContableCuentaDebito)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AsientoContableCuentaCredito)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AsientoContableMonto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AsientoContableEstado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AuxiliarId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AsientoContableFecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AsientoContableDescripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AsientoContableCuentaDebito)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AsientoContableCuentaCredito)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AsientoContableMonto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AsientoContableEstado)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AsientoContableId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AsientoContableId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AsientoContableId })
+        </td>
+    </tr>
+}
+
+</table>

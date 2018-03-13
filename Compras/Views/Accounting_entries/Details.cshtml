@@ -1,0 +1,74 @@
+﻿@model Compras.Models.Accounting_entries
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Accounting_entries</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AuxiliarId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuxiliarId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AsientoContableFecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AsientoContableFecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AsientoContableDescripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AsientoContableDescripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AsientoContableCuentaDebito)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AsientoContableCuentaDebito)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AsientoContableCuentaCredito)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AsientoContableCuentaCredito)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AsientoContableMonto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AsientoContableMonto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AsientoContableEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AsientoContableEstado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AsientoContableId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
