@@ -26,5 +26,7 @@ namespace Compras.Models
         public decimal? AsientoContableMonto { get; set; }
 
         public int? AsientoContableEstado { get; set; }
+
+        public int? AsientoContableExternoId { get; set; }
     }
 }

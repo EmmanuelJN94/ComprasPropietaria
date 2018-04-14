@@ -12,25 +12,28 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.AuxiliarId)
+            Auxiliar
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AsientoContableFecha)
+            Fecha
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AsientoContableDescripcion)
+            Descripción
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AsientoContableCuentaDebito)
+            Cuenta Débito
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AsientoContableCuentaCredito)
+            Cuenta Crédito
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AsientoContableMonto)
+            Monto
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AsientoContableEstado)
+            Estado
+        </th>
+        <th>
+            ID Externo
         </th>
         <th></th>
     </tr>
@@ -58,10 +61,23 @@
         <td>
             @Html.DisplayFor(modelItem => item.AsientoContableEstado)
         </td>
+        @if(item.AsientoContableExternoId == null)
+        {
+            <td>Sin enviar</td>
+        }
+        else
+        {
+            <td>@Html.DisplayFor(modelItem => item.AsientoContableExternoId)</td>
+        }
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.AsientoContableId }) |
             @Html.ActionLink("Details", "Details", new { id=item.AsientoContableId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AsientoContableId })
+            @Html.ActionLink("Delete", "Delete", new { id=item.AsientoContableId }) 
+            @if(item.AsientoContableExternoId == null)
+            {
+               <label> | </label>
+               @Html.ActionLink("Enviar a Contabilidad", "EnviarAsientoContable", new { id=item.AsientoContableId })
+            }
         </td>
     </tr>
 }

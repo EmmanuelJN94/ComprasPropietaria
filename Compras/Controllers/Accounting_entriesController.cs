@@ -4,9 +4,13 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Compras.Models;
+using Newtonsoft.Json;
+using Compras.Code;
 
 namespace Compras.Controllers
 {
@@ -113,6 +117,55 @@ namespace Compras.Controllers
             db.Accounting_entries.Remove(accounting_entries);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult EnviarAsientoContable(int id)
+        {
+            try
+            {
+                var accounting_Entries = db.Accounting_entries.Where(x => x.AsientoContableId == id).Select(a => new {
+                    a.AsientoContableId,
+                    a.AsientoContableFecha,
+                    a.AsientoContableDescripcion,
+                    a.AsientoContableCuentaDebito,
+                    a.AsientoContableCuentaCredito,
+                    a.AsientoContableMonto,
+                    a.AsientoContableEstado
+                }).FirstOrDefault();
+
+                using (HttpClient client = new HttpClient())
+                {
+                    
+                    var contenido_http = JsonConvert.SerializeObject(accounting_Entries);
+
+                    var buffer = System.Text.Encoding.UTF8.GetBytes(contenido_http);
+
+                    var byteContent = new ByteArrayContent(buffer);
+
+                    byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                    var result = client.PostAsync("https://contabilidadpropietaria.azurewebsites.net/api/asientocontable/external", byteContent).Result;
+                    
+                    var result_message = result.Content.ReadAsStringAsync().Result;
+
+                    if(!string.IsNullOrWhiteSpace(result_message) && !Utilities.IsNumber(result_message))
+                    {
+                        Accounting_entries to_save = db.Accounting_entries.Find(accounting_Entries.AsientoContableId);
+
+                        to_save.AsientoContableExternoId = Convert.ToInt32(result);
+                        
+                        db.SaveChanges();
+                    }
+                }
+
+                return RedirectToAction("Index");
+                    
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)
