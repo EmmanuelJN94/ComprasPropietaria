@@ -125,13 +125,11 @@ namespace Compras.Controllers
             try
             {
                 var accounting_Entries = db.Accounting_entries.Where(x => x.AsientoContableId == id).Select(a => new {
-                    a.AsientoContableId,
-                    a.AsientoContableFecha,
+                    AuxiliarId = 7,
                     a.AsientoContableDescripcion,
                     a.AsientoContableCuentaDebito,
                     a.AsientoContableCuentaCredito,
-                    a.AsientoContableMonto,
-                    a.AsientoContableEstado
+                    a.AsientoContableMonto
                 }).FirstOrDefault();
 
                 using (HttpClient client = new HttpClient())
@@ -149,11 +147,11 @@ namespace Compras.Controllers
                     
                     var result_message = result.Content.ReadAsStringAsync().Result;
 
-                    if(!string.IsNullOrWhiteSpace(result_message) && !Utilities.IsNumber(result_message))
+                    if(!string.IsNullOrWhiteSpace(result_message) && Utilities.IsNumber(result_message))
                     {
-                        Accounting_entries to_save = db.Accounting_entries.Find(accounting_Entries.AsientoContableId);
+                        Accounting_entries to_save = db.Accounting_entries.Find(id);
 
-                        to_save.AsientoContableExternoId = Convert.ToInt32(result);
+                        to_save.AsientoContableExternoId = Convert.ToInt32(result_message);
                         
                         db.SaveChanges();
                     }
